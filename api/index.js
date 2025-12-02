@@ -16,9 +16,23 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:3000", // local dev
+  "https://react-blog-project-indol.vercel.app", // vercel frontend
+];
+
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: (origin, callback) => {
+      // allow requests with no origin (like mobile apps or curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
