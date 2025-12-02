@@ -2,7 +2,7 @@ import "./Home.css";
 import Header from "../../header/Header.jsx";
 import Posts from "../../posts/Posts.jsx";
 import SideBar from "../../sidebar/SideBar.jsx";
-import axios from "axios";
+import API from "../../api.js";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -13,7 +13,7 @@ export default function Home() {
 
     useEffect(() =>{
         const fetchPosts = async () => {
-            const res = await axios.get("/posts");
+            const res = await API.get("/posts");
             // console.log(res);
             setPosts(res.data);
             
